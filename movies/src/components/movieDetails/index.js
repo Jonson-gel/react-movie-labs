@@ -24,58 +24,74 @@ const chip = { margin: 0.5 };
 const MovieDetails = ({ movie }) => {  // Don't miss this!
     const [drawerOpen, setDrawerOpen] = useState(false);
 
-  return (
-    <>
-      <Typography variant="h5" component="h3">
-        Overview
-      </Typography>
+    return (
+        <>
+            <Typography variant="h5" component="h3">
+                Overview
+            </Typography>
 
-      <Typography variant="h6" component="p">
-        {movie.overview}
-      </Typography>
+            <Typography variant="h6" component="p">
+                {movie.overview}
+            </Typography>
 
-      <Paper 
-        component="ul" 
-        sx={{...root}}
-      >
-        <li>
-          <Chip label="Genres" sx={{...chip}} color="primary" />
-        </li>
-        {movie.genres.map((g) => (
-          <li key={g.name}>
-            <Chip label={g.name} sx={{...chip}} />
-          </li>
-        ))}
-      </Paper>
-      <Paper component="ul" sx={{...root}}>
-        <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
-        <Chip
-          icon={<MonetizationIcon />}
-          label={`${movie.revenue.toLocaleString()}`}
-        />
-        <Chip
-          icon={<StarRate />}
-          label={`${movie.vote_average} (${movie.vote_count}`}
-        />
-        <Chip label={`Released: ${movie.release_date}`} />
-      </Paper>
-      <Fab
-        color="secondary"
-        variant="extended"
-        onClick={() =>setDrawerOpen(true)}
-        sx={{
-          position: 'fixed',
-          bottom: '1em',
-          right: '1em'
-        }}
-      >
-        <NavigationIcon />
-        Reviews
-      </Fab>
-      <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-        <MovieReviews movie={movie} />
-      </Drawer>
-      </>
-  );
+            <Paper
+                component="ul"
+                sx={{ ...root }}
+            >
+                <li>
+                    <Chip label="Genres" sx={{ ...chip }} color="primary" />
+                </li>
+                {movie.genres.map((g) => (
+                    <li key={g.name}>
+                        <Chip label={g.name} sx={{ ...chip }} />
+                    </li>
+                ))}
+            </Paper>
+
+            <Paper component="ul" sx={{ ...root }}>
+                <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
+                <Chip
+                    icon={<MonetizationIcon />}
+                    label={`${movie.revenue.toLocaleString()}`}
+                />
+                <Chip
+                    icon={<StarRate />}
+                    label={`${movie.vote_average} (${movie.vote_count}`}
+                />
+                <Chip label={`Released: ${movie.release_date}`} />
+            </Paper>
+
+            <Paper
+                component="ul"
+                sx={{ ...root }}
+            >
+                <li>
+                    <Chip label="Production Country" sx={{ ...chip }} color="primary" />
+                </li>
+                {movie.production_countries.map((country) => (
+                    <li key={country.name}>
+                        <Chip label={country.name} sx={{ ...chip }} />
+                    </li>
+                ))}
+            </Paper>
+
+            <Fab
+                color="secondary"
+                variant="extended"
+                onClick={() => setDrawerOpen(true)}
+                sx={{
+                    position: 'fixed',
+                    bottom: '1em',
+                    right: '1em'
+                }}
+            >
+                <NavigationIcon />
+                Reviews
+            </Fab>
+            <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+                <MovieReviews movie={movie} />
+            </Drawer>
+        </>
+    );
 };
-export default MovieDetails ;
+export default MovieDetails;
