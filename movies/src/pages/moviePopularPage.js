@@ -7,7 +7,7 @@ import AddToFavoritesIcon from "../components/cardIcons/addToFavorites";
 
 const PopularPage = (props) => {
 
-  const { data, error, isLoading, isError } = useQuery('discover', getPopular)
+  const { data, error, isLoading, isError } = useQuery('popular', getPopular)
 
   if (isLoading) {
     return <Spinner />
@@ -19,8 +19,7 @@ const PopularPage = (props) => {
   const movies = data.results;
 
   const favorites = movies.filter(m => m.favorite)
-  localStorage.setItem('mustwatch', JSON.stringify(favorites))
-  const addToFavorites = (movieId) => true
+  localStorage.setItem('upcoming', JSON.stringify(favorites))
 
   return (
     <PageTemplate
