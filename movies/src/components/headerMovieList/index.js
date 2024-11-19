@@ -6,29 +6,58 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 
-const Header = (props ) => {
-  const title = props.title
+const Header = ({ title }) => {
   const navigate = useNavigate();
-  
+
   return (
-    <Paper 
-      component="div" 
+    <Paper
+      component="div"
       sx={{
         display: "flex",
-        justifyContent: "space-around",
-        flexWrap: "wrap",
-        marginBottom: 1.5,
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "16px 24px",
+        marginBottom: "24px",
+        borderRadius: "12px",
+        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
       }}
+    >
+      <IconButton
+        aria-label="go back"
+        onClick={() => navigate(-1)}
+        sx={{
+          backgroundColor: "#e3f2fd",
+          "&:hover": { backgroundColor: "#bbdefb" },
+          padding: "12px",
+        }}
       >
-      <IconButton aria-label="go back" onClick={() => navigate(-1)}>
-        <ArrowBackIcon color="primary" fontSize="large" />
+        <ArrowBackIcon color="primary" fontSize="medium" />
       </IconButton>
 
-      <Typography variant="h4" component="h3">
+      <Typography
+        variant="h4"
+        component="h3"
+        sx={{
+          fontWeight: "bold",
+          textAlign: "center",
+          flex: 1,
+          margin: "0 16px",
+          color: "#212121",
+        }}
+      >
         {title}
       </Typography>
-      <IconButton aria-label="go forward" onClick={() => navigate(+1)}>
-        <ArrowForwardIcon color="primary" fontSize="large" />
+
+      <IconButton
+        aria-label="go forward"
+        onClick={() => navigate(+1)}
+        sx={{
+          backgroundColor: "#e3f2fd",
+          "&:hover": { backgroundColor: "#bbdefb" },
+          padding: "12px",
+        }}
+      >
+        <ArrowForwardIcon color="primary" fontSize="medium" />
       </IconButton>
     </Paper>
   );
