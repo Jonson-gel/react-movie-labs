@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 const MovieReview =  ({ review }) => {
   return (
     <>
-      <Typography variant="h5" component="h3">
+      <Typography variant="h5" component="h3" fontWeight="bold">
         Review By: {review.author}
       </Typography>
 

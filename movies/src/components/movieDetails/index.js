@@ -20,12 +20,12 @@ const root = {
 };
 const chip = { margin: 0.5 };
 
-const MovieDetails = ({ movie }) => {  // Don't miss this!
+const MovieDetails = ({ movie }) => {
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     return (
         <>
-            <Typography variant="h5" component="h3">
+            <Typography variant="h5" component="h3" fontWeight="bold">
                 Overview
             </Typography>
 

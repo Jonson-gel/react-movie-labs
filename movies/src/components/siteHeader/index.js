@@ -52,7 +52,7 @@ const SiteHeader = () => {
             alignItems: "center",
           }}
         >
-          {/* Logo & Title */}
+
           <div>
             <Typography variant="h5" fontWeight="bold">
               TMDB Client
@@ -62,7 +62,6 @@ const SiteHeader = () => {
             </Typography>
           </div>
 
-          {/* Navigation */}
           {isMobile ? (
             <>
               <IconButton
