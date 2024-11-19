@@ -10,7 +10,6 @@ import React, { useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews"
 
-
 const root = {
     display: "flex",
     justifyContent: "center",
@@ -91,6 +90,7 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
             <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
                 <MovieReviews movie={movie} />
             </Drawer>
+
         </>
     );
 };

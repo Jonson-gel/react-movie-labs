@@ -1,5 +1,5 @@
 import React from "react";
-import { getNowPlaying, getUpComing } from "../api/tmdb-api";
+import { getNowPlaying } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
