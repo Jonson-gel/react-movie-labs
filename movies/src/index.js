@@ -43,7 +43,7 @@ const App = () => {
             <Route path="/movies/mustwatch" element={ <MustWatchPage /> } />
             <Route path="/movies/popular" element={ <PopularPage /> } />
             <Route path="/movies/nowplaying" element={ <Nowplaying /> } />
-            <Route path="/movies/actors" element={ <ActorPage /> } />
+            <Route path="/actors/:id" element={ <ActorPage /> } />
           </Routes>
         </MoviesContextProvider>
       </BrowserRouter>

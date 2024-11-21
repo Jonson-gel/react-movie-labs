@@ -117,9 +117,11 @@ const MovieDetails = ({ movie }) => {
                     <Chip label="Actors" sx={{ ...chip }} color="primary" />
                 </li>
                 {actors.map((actors) => (
-                    <li>
-                        <Chip label={actors.name} sx={{ ...chip }} />
-                    </li>
+                    <li key={actors.id}>
+                    <Link to={`/actors/${actors.id}`}>
+                      <Chip label={actors.name} sx={{...chip}}/>
+                    </Link> 
+                  </li>
                 ))}
             </Paper>
 

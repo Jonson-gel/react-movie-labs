@@ -1,12 +1,17 @@
 import React from "react";
-import { getMovieActors } from "../api/tmdb-api";
-import PageTemplate from '../components/templateMovieListPage';
+import { getActor } from "../api/tmdb-api";
+import PageTemplate from '../components/templateActorPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
+import { useParams } from 'react-router-dom';
+import ActorDetails from '../components/ActorDetails'
 
 const ActorPage = (props) => {
-
-  const { data, error, isLoading, isError } = useQuery('actors', getMovieActors)
+  const { id } = useParams();
+  const { data : actor, error, isLoading, isError } = useQuery(
+    ["actor", { id: id }],
+    getActor
+  );
 
   if (isLoading) {
     return <Spinner />
@@ -15,16 +20,19 @@ const ActorPage = (props) => {
   if (isError) {
     return <h1>{error.message}</h1>
   }
-  const actor = data.results;
-
-  const favorites = actor.filter(m => m.favorite)
-  localStorage.setItem('favorites', JSON.stringify(favorites))
 
   return (
-    <PageTemplate
-      title="Discover Actors"
-      actor={actor}
-    />
+    <>
+      {actor ? (
+        <>
+          <PageTemplate actor={actor}>
+            <ActorDetails actor={actor} />
+          </PageTemplate>
+        </>
+      ) : (
+        <p>Waiting for actor details</p>
+      )}
+    </>
   );
 };
 export default ActorPage;
