@@ -9,6 +9,9 @@ import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews"
+import { getMovieActors } from "../../api/tmdb-api";
+import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
 
 const root = {
     display: "flex",
@@ -22,6 +25,21 @@ const chip = { margin: 0.5 };
 
 const MovieDetails = ({ movie }) => {
     const [drawerOpen, setDrawerOpen] = useState(false);
+
+    const { data, error, isLoading, isError } = useQuery(
+        ["movieActors", { id: movie.id }],
+        getMovieActors
+    )
+
+    if (isLoading) {
+        return <Spinner />
+    }
+
+    if (isError) {
+        return <p>{error.message}</p>
+    }
+
+    const actors = data.cast || [];
 
     return (
         <>
@@ -87,6 +105,19 @@ const MovieDetails = ({ movie }) => {
                 {movie.production_countries.map((country) => (
                     <li key={country.name}>
                         <Chip label={country.name} sx={{ ...chip }} />
+                    </li>
+                ))}
+            </Paper>
+
+            <Paper
+                component="ul"
+                sx={{ ...root }}>
+                <li>
+                    <Chip label="Actors" sx={{ ...chip }} color="primary" />
+                </li>
+                {actors.map((actors) => (
+                    <li>
+                        <Chip label={actors.name} sx={{ ...chip }} />
                     </li>
                 ))}
             </Paper>

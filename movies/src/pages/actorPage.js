@@ -3,7 +3,6 @@ import { getMovieActors } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
-import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
 
 const ActorPage = (props) => {
 
@@ -16,19 +15,15 @@ const ActorPage = (props) => {
   if (isError) {
     return <h1>{error.message}</h1>
   }
-  const movies = data.results;
+  const actor = data.results;
 
-  const favorites = movies.filter(m => m.favorite)
+  const favorites = actor.filter(m => m.favorite)
   localStorage.setItem('favorites', JSON.stringify(favorites))
-  const addToFavorites = (movieId) => true
 
   return (
     <PageTemplate
       title="Discover Actors"
-      movies={movies}
-      action={(movie) => {
-        return <AddToFavoritesIcon movie={movie} />
-      }}
+      actor={actor}
     />
   );
 };
