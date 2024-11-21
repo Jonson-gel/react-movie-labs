@@ -25,7 +25,7 @@ const MovieDetails = ({ movie }) => {
 
     return (
         <>
-            <Typography variant="h5" component="h3" fontWeight="bold">
+            <Typography variant="h4" component="h3" fontWeight="bold">
                 Overview
             </Typography>
 
@@ -39,6 +39,9 @@ const MovieDetails = ({ movie }) => {
             >
                 <li>
                     <Chip label="Genres" sx={{ ...chip }} color="primary" />
+                </li>
+                <li>
+                    <Chip label={movie.adult?"Limited":"Unlimited"} sx={{ ...chip }} />
                 </li>
                 {movie.genres.map((g) => (
                     <li key={g.name}>
@@ -58,6 +61,20 @@ const MovieDetails = ({ movie }) => {
                     label={`${movie.vote_average} (${movie.vote_count}`}
                 />
                 <Chip label={`Released: ${movie.release_date}`} />
+            </Paper>
+
+            <Paper
+                component="ul"
+                sx={{ ...root }}
+            >
+                <li>
+                    <Chip label="Spoken languages" sx={{ ...chip }} color="primary" />
+                </li>
+                {movie.spoken_languages.map((language) => (
+                    <li key={language.name}>
+                        <Chip label={language.name} sx={{ ...chip }} />
+                    </li>
+                ))}
             </Paper>
 
             <Paper
