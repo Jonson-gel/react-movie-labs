@@ -11,6 +11,7 @@ import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews"
 import { getMovieActors } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
+import Spinner from '../spinner';
 import { Link } from "react-router-dom";
 
 const root = {
