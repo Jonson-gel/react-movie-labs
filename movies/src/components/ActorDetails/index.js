@@ -30,10 +30,6 @@ const ActorDetails = ({ actor }) => {
 
     return (
         <>
-            <Typography variant="h4" component="h3" fontWeight="bold">
-                {actor.name}
-            </Typography>
-
             <Typography variant="h6" component="p">
                 {actor.biography}
             </Typography>
