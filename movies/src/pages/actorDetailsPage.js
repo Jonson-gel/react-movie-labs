@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
 import { useParams } from 'react-router-dom';
 import ActorDetails from '../components/ActorDetails'
+import AddToFavoriteActorsIcon from "../components/cardIcons/addToFavoriteActors"
 
 const ActorPage = (props) => {
   const { id } = useParams();
@@ -25,7 +26,12 @@ const ActorPage = (props) => {
     <>
       {actor ? (
         <>
-          <PageTemplate actor={actor}>
+          <PageTemplate
+            actor={actor}
+            action={(actor) => {
+              return <AddToFavoriteActorsIcon actor={actor} />
+            }}
+          >
             <ActorDetails actor={actor} />
           </PageTemplate>
         </>

@@ -1,37 +1,42 @@
 import React from "react";
-import Header from "../headerActor";
 import Grid from "@mui/material/Grid2";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { getActorImages } from "../../api/tmdb-api";
+import { getActorImages, getActor } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner'
 
-const TemplateActorPage = ({ actor, children, action }) => {
-  const { data , error, isLoading, isError } = useQuery(
-    ["images", { id: actor.id }],
-    getActorImages
-  );
+const TemplateActorPage = ({ id }) => {
+    //   const { data , error, isLoading, isError } = useQuery(
+    //     ["images", { id: actor.id }],
+    //     getActorImages
+    //   );
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+    //   if (isLoading) {
+    //     return <Spinner />;
+    //   }
 
-  if (isError) {
-    return <h1>{error.message}</h1>;
-  }
-  const images = data.profiles 
+    //   if (isError) {
+    //     return <h1>{error.message}</h1>;
+    //   }
+    //   const images = data.profiles
 
-  return (
-    <>
-      <Grid item xs={12}>
-        <Header
-          actor={actor}
-          action={action}
-        />
-      </Grid>
+    const { data: actor, error, isLoading, isError } = useQuery(
+        ["actor", { id: id }],
+        getActor
+    );
 
-      <Grid container spacing={5} style={{ padding: "15px" }}>
+    if (isLoading) {
+        return <Spinner />
+    }
+
+    if (isError) {
+        return <h1>{error.message}</h1>
+    }
+
+    return (
+        <>
+            {/* <Grid container spacing={5} style={{ padding: "15px" }}>
         <Grid size={{xs: 3}}>
           <div sx={{
             display: "flex",
@@ -55,13 +60,11 @@ const TemplateActorPage = ({ actor, children, action }) => {
             </ImageList>
           </div>
         </Grid>
+      </Grid> */}
 
-        <Grid size={{xs: 9}}>
-          {children}
-        </Grid>
-      </Grid>
-    </>
-  );
+            {actor}
+        </>
+    );
 };
 
 export default TemplateActorPage;
