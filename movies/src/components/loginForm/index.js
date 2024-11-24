@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { getToken, createSession } from '../../api/tmdb-api';
 import { Container, Button, Typography, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../../contexts/authContext";
 
 const LoginForm = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const { isAuthenticated, login, logout } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -15,8 +16,8 @@ const LoginForm = () => {
                 try {
                     const sessionId = await createSession(token);
                     sessionStorage.setItem('sessionId', sessionId);
-                    setIsAuthenticated(true);
                     navigate('/');
+                    login(sessionId);
                 } catch (error) {
                     console.error('Error creating session:', error);
                     alert('Failed to create session. Please try again.');
@@ -35,6 +36,11 @@ const LoginForm = () => {
         }
     };
 
+    const handleLogout = () => {
+        logout();
+        navigate("/movies");
+    };
+
     return (
         <Container style={{ textAlign: 'center', marginTop: '50px' }}>
             <Typography variant="h4" gutterBottom>
@@ -50,7 +56,14 @@ const LoginForm = () => {
                     Get Authorization
                 </Button>
             ) : (
-                <Alert severity="success">Session created successfully!</Alert>
+                <Button 
+                    onClick={handleLogout} 
+                    variant="contained" 
+                    color="primary" 
+                    style={{ margin: '20px' }}
+                >
+                    Log Out
+                </Button>
             )}
         </Container>
     );

@@ -54,7 +54,7 @@ const MoviesContextProvider = (props) => {
     else{
       newFavoriteActors = [...favoriteActors];
     }
-    setMustwatch(newFavoriteActors)
+    setFavoriteActors(newFavoriteActors)
     console.log(favoriteActors);
   };
 
@@ -69,6 +69,8 @@ const MoviesContextProvider = (props) => {
       value={{
         favorites,
         mustwatch,
+        myReviews,
+        favoriteActors,
         addToFavorites,
         addToMustWatch,
         removeFromFavorites,

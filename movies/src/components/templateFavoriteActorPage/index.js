@@ -2,7 +2,7 @@ import React from "react";
 import Grid from "@mui/material/Grid2";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { getActorImages, getActor } from "../../api/tmdb-api";
+import { getActorImages, getActor, getMovieActors } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner'
 
@@ -21,9 +21,9 @@ const TemplateActorPage = ({ id }) => {
     //   }
     //   const images = data.profiles
 
-    const { data: actor, error, isLoading, isError } = useQuery(
+    const { data: actors, error, isLoading, isError } = useQuery(
         ["actor", { id: id }],
-        getActor
+        getMovieActors
     );
 
     if (isLoading) {
@@ -62,7 +62,7 @@ const TemplateActorPage = ({ id }) => {
         </Grid>
       </Grid> */}
 
-            {actor}
+            {actors}
         </>
     );
 };
