@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import PageTemplate from "../components/templateFavoriteActorPage";
 import { useQueries } from "react-query";
-import { getActor, getFavoriteActors } from "../api/tmdb-api";
+import { getActor } from "../api/tmdb-api";
 import Spinner from '../components/spinner';
 import RemoveFromFavoriteActors from "../components/cardIcons/removeFromFavoriteActors"
 import { MoviesContext } from "../contexts/moviesContext";
@@ -31,19 +31,22 @@ const FavoriteActorsPage = () => {
   });
 
   return (
+    // <PageTemplate
+    //   actors={actors}
+    //   ids={actorIds}
+    //   title="Favorite Actors"
+    //   action={(movie) => {
+    //     return (
+    //       <>
+    //         <RemoveFromFavoriteActors movie={movie} />
+    //       </>
+    //     );
+    //   }}
+    // />
     <Grid container spacing={3} sx={{ padding: "20px" }}>
-      <PageTemplate
-        actors={actors}
-        ids={actorIds}
-        title="Favorite Actors"
-        action={(movie) => {
-          return (
-            <>
-              <RemoveFromFavoriteActors movie={movie} />
-            </>
-          );
-        }}
-      />
+      {actorIds.map((id) => (
+          <PageTemplate id={id} />
+      ))}
     </Grid>
   );
 };

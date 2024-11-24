@@ -6,27 +6,27 @@ import { getActorImages } from "../../api/tmdb-api";
 import { useNavigate } from 'react-router-dom';
 import Grid from "@mui/material/Grid";
 
-const FavoriteActor = (id) => {
+const FavoriteActor = (images) => {
     const navigate = useNavigate();
 
-    const { data, error, isLoading, isError } = useQuery(
-        ["images", { id: id }],
-        getActorImages
-    );
+    // const { data, error, isLoading, isError } = useQuery(
+    //     ["images", { id: id }],
+    //     getActorImages
+    // );
 
-    if (isLoading) {
-        return <Spinner />;
-    }
+    // if (isLoading) {
+    //     return <Spinner />;
+    // }
 
-    if (isError) {
-        return <h1>{error.message}</h1>;
-    }
+    // if (isError) {
+    //     return <h1>{error.message}</h1>;
+    // }
 
     const handleImageClick = () => {
-        navigate(`/actors/${id}`);
+        navigate(`/actors/${images.id}`);
     };
 
-    const images = data.profiles.slice(0, 1);
+    const image = images.profiles.slice(0, 1);
 
     return (
         <Grid container spacing={5} style={{ padding: "15px" }}>
@@ -44,7 +44,7 @@ const FavoriteActor = (id) => {
                         }}
                         cols={1}
                     >
-                        {images.map((image) => (
+                        {image.map((image) => (
                             <ImageListItem key={image.file_path} cols={1}>
                                 <img
                                     src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
