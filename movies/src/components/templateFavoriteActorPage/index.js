@@ -1,69 +1,88 @@
 import React from "react";
-import Grid from "@mui/material/Grid2";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import Spinner from '../spinner';
-import { getActorImages } from "../../api/tmdb-api";
+import Spinner from "../spinner";
+import { getActorImages, getActor } from "../../api/tmdb-api";
 
 const TemplateActorPage = ({ id }) => {
-    const { data, error, isLoading, isError } = useQuery(
-        ["images", { id: id }],
-        getActorImages
-    );
-    const navigate = useNavigate();
+  const { data: imageData, isLoading: isImageLoading, isError: isImageError } = useQuery(
+    ["images", { id }],
+    getActorImages
+  );
 
-    if (isLoading) {
-        return <Spinner />;
-    }
+  const { data: actorData, isLoading: isActorLoading, isError: isActorError } = useQuery(
+    ["actor", { id }],
+    getActor
+  );
 
-    if (isError) {
-        return <h1>{error.message}</h1>;
-    }
+  const navigate = useNavigate();
 
-    const images = data.profiles.slice(0, 1);
+  if (isImageLoading || isActorLoading) {
+    return <Spinner />;
+  }
 
-    const handleImageClick = () => {
-        navigate(`/actor/${id}`);
-    };
+  if (isImageError || isActorError) {
+    return <h1>Failed to load data</h1>;
+  }
 
-    return (
-        <>
-            <Grid container spacing={5} style={{ padding: "15px" }}>
-                <Grid size={{ xs: 3 }}>
-                    <div
-                        sx={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                            justifyContent: "space-around",
-                        }}
-                    >
-                        <ImageList
-                            sx={{
-                                height: "100vh",
-                            }}
-                            cols={1}
-                        >
-                            {images.map((image) => (
-                                <ImageListItem key={image.file_path} cols={1}>
-                                    <img
-                                        src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
-                                        alt={`Actor Image`}
-                                        style={{
-                                            cursor: "pointer",
-                                            borderRadius: "8px",
-                                        }}
-                                        onClick={handleImageClick}
-                                    />
-                                </ImageListItem>
-                            ))}
-                        </ImageList>
-                    </div>
-                </Grid>
-            </Grid>
-        </>
-    );
+  const images = imageData.profiles.slice(0, 1);
+  const actorName = actorData.name;
+
+  const handleImageClick = () => {
+    navigate(`/actor/${id}`);
+  };
+
+  return (
+    <Grid item xs={12} sm={6} md={4} style={{ padding: "15px" }}>
+      <div
+        style={{
+          textAlign: "center",
+        }}
+      >
+        {images.map((image) => (
+          <div key={image.file_path}>
+            {/* Image container */}
+            <div
+              style={{
+                width: "100%",
+                maxWidth: "300px",
+                aspectRatio: "2 / 3",
+                overflow: "hidden",
+                borderRadius: "8px",
+                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+                margin: "0 auto",
+                cursor: "pointer",
+              }}
+              onClick={handleImageClick}
+            >
+              <img
+                src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
+                alt={actorName}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+            </div>
+            {/* Actor name */}
+            <Typography
+              variant="h6"
+              sx={{
+                marginTop: "10px",
+                color: "#333",
+                fontWeight: "bold",
+              }}
+            >
+              {actorName}
+            </Typography>
+          </div>
+        ))}
+      </div>
+    </Grid>
+  );
 };
 
 export default TemplateActorPage;
