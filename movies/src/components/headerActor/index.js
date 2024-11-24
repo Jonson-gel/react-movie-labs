@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Paper from "@mui/material/Paper";
@@ -6,9 +6,22 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { MoviesContext } from "../../contexts/moviesContext";
 
-const HeaderActor = ({ actor, action }) => {
+const HeaderActor = ({ actor }) => {
   const navigate = useNavigate();
+  const { favoriteActors, addToFavoriteActors } = useContext(MoviesContext);
+
+    if (favoriteActors.find((id) => id === actor.id)) {
+        actor.favoriteActors = true;
+    } else {
+        actor.favoriteActors = false
+    }
+
+    const handleAddToFavoriteActors = (e) => {
+        e.preventDefault();
+        addToFavoriteActors(actor);
+    };
 
   return (
     <Paper
@@ -51,7 +64,7 @@ const HeaderActor = ({ actor, action }) => {
 
       <IconButton
         aria-label="add to favorites"
-        onClick={action}
+        onClick={handleAddToFavoriteActors}
         sx={{
           margin: "0 16px",
           backgroundColor: "#ffcdd2",

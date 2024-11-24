@@ -1,69 +1,60 @@
-import React from "react";
-import Grid from "@mui/material/Grid2";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import { getActorImages, getActor, getMovieActors } from "../../api/tmdb-api";
-import { useQuery } from "react-query";
-import Spinner from '../spinner'
+import React, { useState } from "react";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import FilterCard from "../filterMoviesCard";
+import Header from "../headerMovieList";
+import FavoriteActor from "../favoriteActor";
 
-const TemplateActorPage = ({ id }) => {
-    //   const { data , error, isLoading, isError } = useQuery(
-    //     ["images", { id: actor.id }],
-    //     getActorImages
-    //   );
+const TemplateActorPage = ({ actors, ids, title, action }) => {
+    const [nameFilter, setNameFilter] = useState("");
+    const [genreFilter, setGenreFilter] = useState("0");
 
-    //   if (isLoading) {
-    //     return <Spinner />;
-    //   }
-
-    //   if (isError) {
-    //     return <h1>{error.message}</h1>;
-    //   }
-    //   const images = data.profiles
-
-    const { data: actors, error, isLoading, isError } = useQuery(
-        ["actor", { id: id }],
-        getMovieActors
-    );
-
-    if (isLoading) {
-        return <Spinner />
-    }
-
-    if (isError) {
-        return <h1>{error.message}</h1>
-    }
+    const handleChange = (type, value) => {
+        if (type === "name") setNameFilter(value);
+        else setGenreFilter(value);
+    };
 
     return (
-        <>
-            {/* <Grid container spacing={5} style={{ padding: "15px" }}>
-        <Grid size={{xs: 3}}>
-          <div sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "space-around",
-          }}>
-            <ImageList
-                sx={{
-                    height: "100vh",
-                }}
-                cols={1}
-            >
-                {images.map((image) => (
-                    <ImageListItem key={image.file_path} cols={1}>
-                    <img
-                        src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
-                        alt={image.poster_path}
-                    />
-                    </ImageListItem>
-                ))}
-            </ImageList>
-          </div>
-        </Grid>
-      </Grid> */}
+        <Grid container spacing={3} sx={{ padding: "20px" }}>
+            <Grid item xs={12}>
+                <Header title={title} />
+            </Grid>
 
-            {actors}
-        </>
+            <Grid container spacing={3}>
+                <Grid item xs={12} sm={4} md={3}>
+                    <Paper
+                        elevation={3}
+                        sx={{
+                            padding: "20px",
+                            borderRadius: "10px",
+                            backgroundColor: "#f9f9f9",
+                        }}
+                    >
+                        <FilterCard
+                            onUserInput={handleChange}
+                            titleFilter={nameFilter}
+                            genreFilter={genreFilter}
+                        />
+                    </Paper>
+                </Grid>
+
+                <Grid container spacing={5} style={{ padding: "15px" }}>
+                    <Grid size={{ xs: 3 }}>
+                        <div
+                            sx={{
+                                display: "flex",
+                                flexWrap: "wrap",
+                                justifyContent: "space-around",
+                            }}
+                        >
+                            {ids.map((actorId) => {
+                                <FavoriteActor actorId={actorId} />
+                            })}
+                        </div>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
     );
 };
 

@@ -8,23 +8,42 @@ import { MoviesContext } from "../contexts/moviesContext";
 import { Grid } from "@mui/material";
 
 const FavoriteActorsPage = () => {
-  const {favoriteActors: actorIds } = useContext(MoviesContext);
+  const { favoriteActors: actorIds } = useContext(MoviesContext);
+
+  const favoriteActorsQueries = useQueries(
+    actorIds.map((actorId) => {
+      return {
+        queryKey: ["movie", { id: actorId }],
+        queryFn: getActor,
+      };
+    })
+  );
+
+  const isLoading = favoriteActorsQueries.find((m) => m.isLoading === true);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  const actors = favoriteActorsQueries.map((q) => {
+    q.data.genre_ids = q.data.also_known_as.map(g => g.id)
+    return q.data
+  });
 
   return (
     <Grid container spacing={3} sx={{ padding: "20px" }}>
-      {actorIds.map((id) => (
-        <Grid
-          key={id}
-          item
-          xs={12}
-          sm={6}
-          md={6}
-          lg={4}
-          xl={3}
-        >
-          <PageTemplate id={id} />
-        </Grid>
-      ))}
+      <PageTemplate
+        actors={actors}
+        ids={actorIds}
+        title="Favorite Actors"
+        action={(movie) => {
+          return (
+            <>
+              <RemoveFromFavoriteActors movie={movie} />
+            </>
+          );
+        }}
+      />
     </Grid>
   );
 };

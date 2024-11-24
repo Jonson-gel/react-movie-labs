@@ -7,7 +7,7 @@ import { getActorImages } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner'
 
-const TemplateActorPage = ({ actor, children, action }) => {
+const TemplateActorPage = ({ actor, children }) => {
   const { data , error, isLoading, isError } = useQuery(
     ["images", { id: actor.id }],
     getActorImages
@@ -27,7 +27,6 @@ const TemplateActorPage = ({ actor, children, action }) => {
       <Grid item xs={12}>
         <Header
           actor={actor}
-          action={action}
         />
       </Grid>
 

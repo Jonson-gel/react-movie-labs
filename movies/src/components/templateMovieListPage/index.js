@@ -4,19 +4,32 @@ import FilterCard from "../filterMoviesCard";
 import MovieList from "../movieList";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import Pagination from "@mui/material/Pagination";
 
 function MovieListPageTemplate({ movies, title, action }) {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
+  const [currentPage, setCurrentPage] = useState(1);
+  const moviesPerPage = 9;
+
   const genreId = Number(genreFilter);
 
   let displayedMovies = movies
     .filter((m) => m.title.toLowerCase().includes(nameFilter.toLowerCase()))
     .filter((m) => (genreId > 0 ? m.genre_ids.includes(genreId) : true));
 
+  const indexOfLastMovie = currentPage * moviesPerPage;
+  const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
+  const currentMovies = displayedMovies.slice(indexOfFirstMovie, indexOfLastMovie);
+
+  const handlePageChange = (value) => {
+    setCurrentPage(value);
+  };
+
   const handleChange = (type, value) => {
     if (type === "name") setNameFilter(value);
     else setGenreFilter(value);
+    setCurrentPage(1);
   };
 
   return (
@@ -62,7 +75,15 @@ function MovieListPageTemplate({ movies, title, action }) {
               backgroundColor: "#fff",
             }}
           >
-            <MovieList action={action} movies={displayedMovies} />
+            <MovieList action={action} movies={currentMovies} />
+
+            <Pagination
+              count={Math.ceil(displayedMovies.length / moviesPerPage)}
+              page={currentPage}
+              onChange={handlePageChange}
+              color="primary"
+              sx={{ marginTop: "20px", display: "flex", justifyContent: "center" }}
+            />
           </Paper>
         </Grid>
       </Grid>
