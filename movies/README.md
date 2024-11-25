@@ -4,40 +4,46 @@ Name: Pengcheng Zheng(20109317)
 
 ## Overview.
 
-[A brief statement on the content of this repository.]
+This repository contains a relatively comprehensive movie-finding website where users can freely browse various films. It includes recommendation categories such as popular, upcoming, and nowplaying movies. Users can bookmark their favorite films and actors. To fully access the features, users are required to log in first.
 
 ### Features.
-[ A bullet-point list of the __new features__ you added to the Movies Fan app (and any modifications to existing features) .]
  
-+ Feature 1
-+ Feature 2
-+ Feature 3
-+ etc
-+ etc
++ Add upcoming movies to the "Must-Watch" page
++ Bookmark favorite actors
++ View details of actors
++ Discover credits of a actor
++ View actors who play a role of a movie 
++ Add a "NowPlaying" recommendation page
++ Add a "Popular" recommendation page
++ Implement login and logout functionality
++ Enhance page layout and design
 
 ## Setup requirements.
 
-[ Outline any non-standard setup steps necessary to run your app locally after cloning the repo.]
+
 
 ## API endpoints.
 
-[ List the __additional__ TMDB endpoints used, giving the description and pathname for each one.] 
-
-e.g.
-+ Discover list of movies - discover/movie
-+ Movie details - movie/:id
-+ Movie genres = /genre/movie/list
++ Discover popular movies - movie/popular
++ Discover nowplaying movies - movie/now_playing
++ Discover actors of a movie - movie/:id/credits
++ Discover a certain actor - person/:id
++ Discover images of an actor - person/:id/images
++ Discover credits of an actor - person/:id/movie_credits
++ Get a token - authentication/token/new
++ Create a session - authentication/session/new
 
 ## Routing.
 
-[ List the __new routes__ supported by your app and state the associated page.]
+All of page below are protected.
 
-+ /blogs - displays all published blogs.
-+ /blogs/:id - displays a particular blog.
-+ /blogs/:id/comments - detail view of a particular blog and its comments.
-+ etc.
-
-[If relevant, state what aspects of your app are protected (i.e. require authentication) and what is public.]
++ /movies/mustwatch - display upcoming movies user bookmark
++ /movies/popular - display popular movies
++ /movies/nowplaying - display noeplaying movies
++ /actors/:id - display details of an actor
++ /credits/:id - display credits of an actor
++ /movies/favorite_actors - display actors user bookmark
++ /movies/login - log in and log out
 
 ## Independent learning (If relevant).
 
